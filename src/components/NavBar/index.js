@@ -10,12 +10,12 @@ export default function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Sobre Nós</Nav.Link>
-            <Nav.Link href="#link">Galeria de Fotos</Nav.Link>
-            <Nav.Link href="#link">Playlist de Músicas</Nav.Link>
-            <Nav.Link href="#link">Mapa Interativo</Nav.Link>
-            <Nav.Link href="#link">FAQ</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="sobreNos">Sobre Nós</Nav.Link>
+            <Nav.Link href="galeriaDeFotos">Galeria de Fotos</Nav.Link>
+            <Nav.Link href="playlistDeMusicas">Playlist de Músicas</Nav.Link>
+            <Nav.Link href="mapaInterativo">Mapa Interativo</Nav.Link>
+            <Nav.Link href="faq">FAQ</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
