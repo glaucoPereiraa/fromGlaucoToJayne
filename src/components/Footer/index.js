@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './CountdownTimer.module.css';
 
-const Footer = () => {
+export default function Footer() {
   const calculateTimeLeft = () => {
     const difference = +new Date() - +new Date("2024-01-22");
     let timeLeft = {};
@@ -39,5 +39,3 @@ const Footer = () => {
     </div>
   );
 };
-
-export default Footer;
