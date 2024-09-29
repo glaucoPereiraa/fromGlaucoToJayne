@@ -13,11 +13,13 @@ export default function NavBar() {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="sobreNos">Sobre Nós</Nav.Link>
             <Nav.Link href="galeriaDeFotos">Galeria de Fotos</Nav.Link>
-            <Nav.Link href="playlistDeMusicas">Playlist de Músicas</Nav.Link>
-            <Nav.Link href="mapaInterativo">Mapa Interativo</Nav.Link>
+            <Nav.Link href="presentes">Presentes</Nav.Link>
+            <Nav.Link href="depoimentos">Depoimentos</Nav.Link>
+            {/* <Nav.Link href="mapaInterativo">Mapa Interativo</Nav.Link> */}
             <Nav.Link href="faq">FAQ</Nav.Link>
           </Nav>
         </Navbar.Collapse>
+      <h3>Glauco & Jayne</h3>
       </Container>
     </Navbar>
   );
