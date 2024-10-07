@@ -1,9 +1,16 @@
 "use client"
-import { Button, Card, Col, Row } from 'react-bootstrap';
+import { useRouter } from 'next/navigation';
+import { Card, Col, Row } from 'react-bootstrap';
 
 export default function GiftGrid() {
+  const router = useRouter();
+
+  const handleCheckout = () => {
+      router.push('/checkout');
+  };
+
   return (
-    <Row xs={1} md={4} className="g-4 mt-2 mb-4">
+    <Row xl={3} className="g-1">
       {Array.from({ length: 10 }).map((_, idx) => (
         <Col key={idx}>
           <Card>
@@ -12,9 +19,10 @@ export default function GiftGrid() {
               src="https://t3.ftcdn.net/jpg/02/05/94/48/360_F_205944846_odbpUqKQp1qZ2OGfrDdCyiHUnjOdYuND.jpg"
             />
             <Card.Body>
-              <Card.Title>Produto # {idx}</Card.Title>
-              <Button variant="success">Comprar</Button>
-              <Button href='checkout' variant="primary">Comprar Cota</Button>
+              <Card.Title className='product-title' >Produto # {idx}</Card.Title>
+              <Card.Text className='product-price'>Valor: 100</Card.Text>
+              <button onClick={handleCheckout} className='buy-button'> COMPRAR</button>
+              <button onClick={handleCheckout} className='buy-button'> COTA</button>
             </Card.Body>
           </Card>
         </Col>

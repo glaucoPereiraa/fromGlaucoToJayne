@@ -1,7 +1,7 @@
 "use client"
 import { useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import { Container, Form, Row, Col, Alert, Spinner } from 'react-bootstrap';
 
 export default function Checkout({ priceProp = null }) {
   const query = useSearchParams();
@@ -61,7 +61,7 @@ export default function Checkout({ priceProp = null }) {
   };
 
   return (
-    <Container className="py-5">
+    <Container className="py-5 romantic-page">
       <h1 className="text-center mb-4">Finalizar Compra</h1>
 
       {userId ?
@@ -119,14 +119,14 @@ export default function Checkout({ priceProp = null }) {
 
           <Row className="mb-4">
             <Col>
-              <Button variant="success" className="w-100" onClick={handlePixPayment}>
-                Pagar com Pix
-              </Button>
+              <button className='buy-button' onClick={handlePixPayment}>
+                Pix
+              </button>
             </Col>
             <Col>
-              <Button variant="primary" className="w-100" onClick={handleCardPayment}>
+              <button className='buy-button' onClick={handleCardPayment}>
                 Pagar com Cartão de Crédito
-              </Button>
+              </button>
             </Col>
           </Row>
 

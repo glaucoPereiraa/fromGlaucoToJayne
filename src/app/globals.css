@@ -1,8 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Dancing+Script:wght@400&family=Libre+Baskerville:wght@400&family=Great+Vibes&display=swap');
+
 .romantic-page {
-  font-family: 'Arial', sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  padding: 20px;
+  background-color: #FAF3E0;
+  padding-top: 60px;
+}
+
+.navbar {
+  position: fixed !important; /* Fixa a navbar no topo */
+  top: 0; /* Alinha ao topo da página */
+  left: 0; /* Alinha à esquerda */
+  width: 100%;
+  background-color: #FAF3E0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para destaque */
+  z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
+}
+
+:root body {
+  background-color: #FAF3E0;
 }
 
 .header {
@@ -70,4 +84,89 @@
 .a.nav-link:hover,
 .a.nav-link:focus {
   color: #e91e63;/* Cor rosa ao passar o mouse ou focar */
+}
+
+/* Estilos globais */
+body {
+    font-family: 'Libre Baskerville', serif; /* Fonte para o corpo do texto */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Títulos principais */
+h1 {
+    font-family: 'Playfair Display', serif; /* Fonte elegante para títulos */
+    font-size: 2.5em;
+    margin: 0.5em 0;
+}
+
+/* Títulos secundários */
+h2, h3 {
+    font-family: 'Playfair Display', serif; /* Fonte para subtítulos */
+    font-size: 2em;
+    margin: 0.5em 0;
+}
+
+/* Texto de convite ou destaque */
+h1.invitation, h2.invitation {
+    font-family: 'Dancing Script', cursive; /* Fonte cursiva para convites */
+    font-size: 2.2em;
+    color: #d69d6d; /* Cor suave para realçar */
+}
+
+/* Nomes dos noivos */
+h1.names {
+    font-family: 'Great Vibes', cursive; /* Fonte romântica para nomes */
+    font-size: 3em;
+    color: #a24c6e; /* Outra cor suave */
+}
+
+/* Texto padrão */
+p {
+    font-family: 'Libre Baskerville', serif; /* Fonte para parágrafos */
+    font-size: 1em;
+    color: #333; /* Cor padrão do texto */
+    margin: 0.5em 0;
+}
+.nav-link {
+  font-family: 'Playfair Display', serif; /* Fonte elegante para os links do menu */
+  font-size: 1.2em; /* Tamanho da fonte */
+  text-decoration: none; /* Remove o sublinhado */
+  color: #333; /* Cor do texto */
+  transition: color 0.3s; /* Efeito de transição suave para a cor */
+}
+
+/* Estilo para o título do produto */
+.product-title {
+  font-family: 'Playfair Display', serif; /* Fonte elegante */
+  font-size: 1.5em; /* Tamanho do título */
+  color: #333; /* Cor do texto */
+  margin: 0.5em 0; /* Espaçamento vertical */
+}
+
+/* Estilo para o valor do produto */
+.product-price {
+  font-family: 'Libre Baskerville', serif; /* Fonte para o preço */
+  font-size: 1.1em; /* Tamanho do preço */
+  color: #d69d6d; /* Cor do preço */
+  margin: 0.3em 0; /* Espaçamento vertical */
+}
+
+/* Estilo para os botões de compra */
+.buy-button {
+  width: -webkit-fill-available;
+  margin-bottom: 0.5rem;
+  font-family: 'Dancing Script', cursive; /* Fonte cursiva para os botões */
+  font-size: 1.2em; /* Tamanho da fonte do botão */
+  padding: 0.5em 1.5em; /* Espaçamento interno do botão */
+  border: none; /* Remove bordas padrão */
+  border-radius: 5px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+  transition: background-color 1s; /* Transição suave ao passar o mouse */
+}
+
+/* Efeito de hover para os botões de compra */
+.buy-button:hover {
+  background-color: #d69d6d; /* Cor de destaque ao passar o mouse */
 }
