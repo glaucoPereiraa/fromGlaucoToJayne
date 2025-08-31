@@ -1,5 +1,5 @@
 import NavBar from "@/components/NavBar"
-import Footer from "@/components/Footer"
+import Footer from "@/components/Footer/CountdownTimer"
 
 export default function Home() {
   return (

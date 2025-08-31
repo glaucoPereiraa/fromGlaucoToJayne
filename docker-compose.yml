@@ -1,9 +1,10 @@
 services:
   jayne:
-    image: "node:21-alpine"
+    build:
+      context: .
     container_name: jayne
-    working_dir: /home/node/app
     ports:
       - "3000:3000"
     volumes:
       - .:/home/node/app
+    command: "npm run dev"

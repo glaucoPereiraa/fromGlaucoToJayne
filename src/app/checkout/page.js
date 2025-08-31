@@ -1,43 +1,37 @@
 "use client"
 import { useSearchParams } from 'next/navigation';
+import { QrCodePix } from 'qrcode-pix';
+import { QRCodeSVG } from 'qrcode.react';
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import { Container, Form, Row, Col, Alert, Spinner, Modal, Button } from 'react-bootstrap';
 
-export default function Checkout({ priceProp = null }) {
+export default function Checkout({ priceProp = null}) {
   const query = useSearchParams();
   const userId = query.get('userId');
+  const priceFromQuery = query.get('price');
+  const productNameQuery = query.get('productName');
 
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     phone: '',
-    price: priceProp || '', // Se o preço for passado via props, inicializa com ele
+    price: priceProp || priceFromQuery || '',
   });
+
+  function formatToBRL(value) {
+    const number = Number(value) / 100;
+    return number.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2
+    });
+  }
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Função simulada para buscar as informações do usuário com base no ID
-  const fetchUserInfo = async (userId) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Simulando um fetch de API para buscar dados do usuário
-      const response = await new Promise((resolve) =>
-        setTimeout(() => resolve({ name: 'João Silva', phone: '11999999999', price: 150 }), 1000)
-      );
-
-      setFormData({
-        name: response.name,
-        phone: response.phone,
-        price: priceProp || response.price, // Se "priceProp" for passado como prop, ele prevalece
-      });
-    } catch (error) {
-      setError('Erro ao buscar informações do usuário.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [showPixModal, setShowPixModal] = useState(false);
+  const [pixConfirmed, setPixConfirmed] = useState(false);
+  const [pixPayload, setPixPayload] = useState(null);
 
   useEffect(() => {
     if (userId) {
@@ -50,14 +44,31 @@ export default function Checkout({ priceProp = null }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handlePixPayment = () => {
-    alert('Você será redirecionado para o pagamento via Pix.');
-    // Link do pix
+  const handlePixPayment = async (e) => {
+    e.preventDefault();
+
+    const valor = Number(formData.price) / 100;
+
+    const qrCodePix = QrCodePix({
+      version: '01',
+      key: '9f30ed07-e611-4f3b-b046-41e1bf624254', // sua chave Pix
+      name: 'GLAUCO PEREIRA STARLING',
+      city: 'GOVERNADOR VALA',
+      message: 'Presente Casamento',
+      value: valor,
+    });
+
+    setPixPayload(qrCodePix.payload());
+    setShowPixModal(true);
+  };
+
+  const handleConfirmPix = () => {
+    setPixConfirmed(true);
+    // Aqui você pode futuramente chamar uma API para registrar o pagamento confirmado
   };
 
   const handleCardPayment = () => {
     alert('Você será redirecionado para o pagamento via Cartão de Crédito.');
-    // Link do cartao
   };
 
   return (
@@ -90,6 +101,18 @@ export default function Checkout({ priceProp = null }) {
             />
           </Form.Group>
 
+          <Form.Group controlId="email" className="mb-3">
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control
+              type="text"
+              name="email"
+              placeholder="Digite seu email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+
           <Form.Group controlId="phone" className="mb-3">
             <Form.Label>Número de Telefone</Form.Label>
             <Form.Control
@@ -102,16 +125,18 @@ export default function Checkout({ priceProp = null }) {
             />
           </Form.Group>
 
-          {/* Mostra o input do preço apenas se o preço não vier como prop */}
           {!priceProp && (
             <Form.Group controlId="price" className="mb-3">
               <Form.Label>Valor do Produto</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 name="price"
                 placeholder="Digite o valor do produto"
-                value={formData.price}
-                onChange={handleChange}
+                value={formatToBRL(formData.price)}
+                onChange={(e) => {
+                  const raw = e.target.value.replace(/\D/g, "");
+                  setFormData({ ...formData, price: raw });
+                }}
                 required
               />
             </Form.Group>
@@ -132,12 +157,51 @@ export default function Checkout({ priceProp = null }) {
 
           <Alert variant="info">
             <h4>Detalhes da Compra</h4>
-            <p><strong>Nome do Produto:</strong> Conjunto de Pratos Elegante</p>
-            <p><strong>Valor do Produto:</strong> R$ {formData.price || '---'}</p>
+            <p><strong>Nome do Produto:</strong> {productNameQuery} </p>
+            <p><strong>Valor do Produto:</strong> R$ {formData.price ? formatToBRL(formData.price) : '---'}</p>
             <p>Obrigado por escolher nossos produtos para o seu casamento! Estamos felizes em fazer parte desse momento especial.</p>
           </Alert>
         </Form>
       )}
+
+      <Modal show={showPixModal} onHide={() => setShowPixModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Pagamento via Pix</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          {!pixConfirmed ? (
+            <>
+              <p>Escaneie o QR Code abaixo ou copie o código Pix para pagar:</p>
+              {pixPayload && <QRCodeSVG value={pixPayload} size={200} />}
+              <Button
+                className="mt-3"
+                variant="outline-primary"
+                onClick={() => {
+                  navigator.clipboard.writeText(pixPayload);
+                  alert("Código Pix copiado com sucesso!");
+                }}
+              >
+                Copiar código Pix
+              </Button>
+            </>
+          ) : (
+            <Alert variant="success">
+              🎉 Obrigado por sua compra! Seu presente foi registrado com carinho para o nosso casamento. 💍
+            </Alert>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          {!pixConfirmed ? (
+            <Button variant="success" onClick={handleConfirmPix}>
+              Já realizei o pagamento
+            </Button>
+          ) : (
+            <Button variant="secondary" onClick={() => setShowPixModal(false)}>
+              Fechar
+            </Button>
+          )}
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

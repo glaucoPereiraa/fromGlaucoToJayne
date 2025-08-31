@@ -2,27 +2,37 @@
 import { useRouter } from 'next/navigation';
 import { Card, Col, Row } from 'react-bootstrap';
 
-export default function GiftGrid() {
+export default function GiftGrid({products}) {
   const router = useRouter();
 
-  const handleCheckout = () => {
-      router.push('/checkout');
+  const handleCheckout = (price, productName) => {
+    router.push(`/checkout?price=${price}&productName=${productName}`);
   };
+
+  function formatToBRL(value) {
+    const number = Number(value) / 100;
+    return number.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2
+    });
+  }
 
   return (
     <Row xl={3} className="g-1">
-      {Array.from({ length: 10 }).map((_, idx) => (
-        <Col key={idx}>
+      {products.map((product) => (
+        <Col key={product.id}>
           <Card>
             <Card.Img
               variant="top"
-              src="https://t3.ftcdn.net/jpg/02/05/94/48/360_F_205944846_odbpUqKQp1qZ2OGfrDdCyiHUnjOdYuND.jpg"
+              src={product.imageUrl}
             />
             <Card.Body>
-              <Card.Title className='product-title' >Produto # {idx}</Card.Title>
-              <Card.Text className='product-price'>Valor: 100</Card.Text>
-              <button onClick={handleCheckout} className='buy-button'> COMPRAR</button>
-              <button onClick={handleCheckout} className='buy-button'> COTA</button>
+              <Card.Title className='product-title' >Produto: {product.name}</Card.Title>
+              <Card.Text className='product-description'>{product.description}</Card.Text>
+              <Card.Text className='product-price'>Valor: {formatToBRL(product.price)}</Card.Text>
+              <button onClick={() => handleCheckout(product.price, product.description)} className='buy-button'> COMPRAR</button>
+              <button onClick={() => handleCheckout(product.price, product.description)} className='buy-button'> COTA</button>
             </Card.Body>
           </Card>
         </Col>
