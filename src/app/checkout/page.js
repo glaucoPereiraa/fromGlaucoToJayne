@@ -5,11 +5,10 @@ import { QRCodeSVG } from 'qrcode.react';
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Row, Col, Alert, Spinner, Modal, Button } from 'react-bootstrap';
 
-export default function Checkout({ priceProp = null}) {
-  const query = useSearchParams();
-  const userId = query.get('userId');
-  const priceFromQuery = query.get('price');
-  const productNameQuery = query.get('productName');
+export default function Checkout({ searchParams, priceProp = null}) {
+  const userId = searchParams.userId;
+  const priceFromQuery = searchParams.price;
+  const productNameQuery = searchParams.productName;
 
   const [formData, setFormData] = useState({
     name: '',
